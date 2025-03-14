@@ -11,7 +11,7 @@ SECRET_KEY = 'django-insecure-123456789abcdefghijklmnopqrstuvwxyz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['.vercel.app', 'localhost']
+ALLOWED_HOSTS = ['.vercel.app', 'localhost', '.onrender.com']
 
 # Application definition
 INSTALLED_APPS = [
@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders",
     'blog',
     'solutions',
 ]
@@ -99,6 +100,8 @@ STATICFILES_DIRS = [
 ]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+CORS_ALLOWED_ORIGINS=["http://localhost", "https://blog-solutions.onrender.com", "http://127.0.0.1"]
+CORS_TRUSTED_ORIGINS=["http://localhost", "https://blog-solutions.onrender.com", "http://127.0.0.1"]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
