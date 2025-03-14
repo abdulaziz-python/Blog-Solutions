@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }} - Abdulaziz{% endblock %}
+
+{% block content %}
+<div class="post-container">
+    <a href="{% url 'blog-list' %}" class="back-link">
+        ←
+        <span>Back</span>
+    </a>
+
+    <article class="post">
+        <h1 class="post-title">{{ post.title }}</h1>
+
+        <div class="post-meta">
+            <div class="meta-item">
+                <span>{{ post.date_posted|date:"d.m.Y" }}</span>
+            </div>
+            <div class="meta-item">
+                <span>{{ post.minutes_to_read }} min read</span>
+            </div>
+        </div>
+
+        <div class="post-tags">
+            {% for tag in post.tags.all %}
+            <a href="{% url 'blog-list' %}?tag={{ tag.name }}" class="tag">
+                {{ tag.name }}
+            </a>
+            {% endfor %}
+        </div>
+
+        <div class="post-content">
+            {{ content|safe }}
+        </div>
+    </article>
+</div>
+{% endblock %}

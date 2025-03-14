@@ -1,0 +1,41 @@
+﻿{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <h1>Hello, I'm Abdulaziz</h1>
+        <p>Competitive programmer and algorithm enthusiast</p>
+        <div class="hero-buttons">
+            <a href="{% url 'solution-list' %}" class="btn btn-primary">View Solutions</a>
+            <a href="{% url 'blog-list' %}" class="btn btn-secondary">Read Blog</a>
+        </div>
+    </div>
+</section>
+
+<section class="recent-posts">
+    <div class="section-header">
+        <h2>Recent Blog Posts</h2>
+        <a href="{% url 'blog-list' %}" class="view-all">View all →</a>
+    </div>
+    <div class="card-grid">
+        {% for post in recent_posts %}
+        <div class="card blog-card">
+            <div class="card-meta">
+                <span class="date">{{ post.date_posted|date:"M d, Y" }}</span>
+                <span class="dot">•</span>
+                <span class="read-time">{{ post.minutes_to_read }} min read</span>
+            </div>
+            <h3 class="card-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+            <p class="card-excerpt">{{ post.excerpt }}</p>
+            <div class="card-tags">
+                {% for tag in post.tags.all %}
+                <span class="tag">{{ tag.name }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% empty %}
+        <p>No blog posts yet.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

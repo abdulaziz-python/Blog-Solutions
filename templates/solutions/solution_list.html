@@ -1,0 +1,89 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Solutions - Abdulaziz{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Solutions</h1>
+    <p>My solutions to competitive programming problems</p>
+</div>
+
+<div class="solutions-container">
+    <div class="filters">
+        <div class="search-box">
+            <form method="get" action="{% url 'solution-list' %}">
+                <input type="search" name="search" placeholder="Search solutions..." value="{{ request.GET.search|default:'' }}">
+                <button type="submit" class="search-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+            </form>
+        </div>
+
+        <div class="filter-section">
+            <h3>Platform</h3>
+            <div class="filter-options">
+                {% for platform in platforms %}
+                <a href="{% url 'solution-list' %}?platform={{ platform.name }}{% if request.GET.type %}&type={{ request.GET.type }}{% endif %}" class="filter-option {% if request.GET.platform == platform.name %}active{% endif %}">{{ platform.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="filter-section">
+            <h3>Problem Type</h3>
+            <div class="filter-options">
+                {% for type in question_types %}
+                <a href="{% url 'solution-list' %}?type={{ type.name }}{% if request.GET.platform %}&platform={{ request.GET.platform }}{% endif %}" class="filter-option {% if request.GET.type == type.name %}active{% endif %}">{{ type.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% if request.GET.platform or request.GET.type or request.GET.search %}
+        <a href="{% url 'solution-list' %}" class="reset-filter">Reset filters</a>
+        {% endif %}
+    </div>
+
+    <div class="solutions-list">
+        {% if solutions %}
+        <div class="card-grid">
+            {% for solution in solutions %}
+            <div class="card solution-card">
+                <div class="card-header">
+                    <span class="platform">{{ solution.platform.name }}</span>
+                    <span class="type">{{ solution.question_type.name }}</span>
+                </div>
+                <h3 class="card-title"><a href="{{ solution.get_absolute_url }}">{{ solution.title }}</a></h3>
+                <p class="card-excerpt">{{ solution.description|truncatewords:20 }}</p>
+                <div class="card-footer">
+                    <span class="date">{{ solution.date_added|date:"M d, Y" }}</span>
+                    <a href="{{ solution.get_absolute_url }}" class="view-solution">View Solution →</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if is_paginated %}
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.platform %}&platform={{ request.GET.platform }}{% endif %}{% if request.GET.type %}&type={{ request.GET.type }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}" class="pagination-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </a>
+            {% endif %}
+
+            <span class="pagination-info">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.platform %}&platform={{ request.GET.platform }}{% endif %}{% if request.GET.type %}&type={{ request.GET.type }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}" class="pagination-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </a>
+            {% endif %}
+        </div>
+        {% endif %}
+        {% else %}
+        <div class="empty-state">
+            <h3>No solutions found</h3>
+            <p>Try adjusting your search or filters to find what you're looking for.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

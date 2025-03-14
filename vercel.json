@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "name": "abdulaziz_site",
+  "builds": [
+    {
+      "src": "abdulaziz_site/wsgi.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "abdulaziz_site/wsgi.py"
+    }
+  ]
+}

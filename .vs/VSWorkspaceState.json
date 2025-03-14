@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\abdulaziz_site",
+    "\\blog",
+    "\\solutions",
+    "\\static",
+    "\\static\\css",
+    "\\static\\js",
+    "\\templates",
+    "\\templates\\blog",
+    "\\templates\\solutions"
+  ],
+  "SelectedNode": "\\templates\\blog\\blog_list.html",
+  "PreviewInSolutionExplorer": false
+}

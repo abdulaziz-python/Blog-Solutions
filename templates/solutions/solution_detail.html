@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ solution.title }} - Abdulaziz{% endblock %}
+
+{% block content %}
+<div class="solution-container">
+    <a href="{% url 'solution-list' %}" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        <span>Back to Solutions</span>
+    </a>
+
+    <article class="solution">
+        <div class="solution-header">
+            <h1 class="solution-title">{{ solution.title }}</h1>
+
+            <div class="solution-meta">
+                <div class="meta-item platform">
+                    <span>Platform:</span>
+                    <a href="{% url 'solution-list' %}?platform={{ solution.platform.name }}">{{ solution.platform.name }}</a>
+                </div>
+                <div class="meta-item type">
+                    <span>Type:</span>
+                    <a href="{% url 'solution-list' %}?type={{ solution.question_type.name }}">{{ solution.question_type.name }}</a>
+                </div>
+                <div class="meta-item date">
+                    <span>Added:</span>
+                    <time>{{ solution.date_added|date:"F d, Y" }}</time>
+                </div>
+                {% if solution.external_link %}
+                <div class="meta-item external-link">
+                    <span>Problem Link:</span>
+                    <a href="{{ solution.external_link }}" target="_blank" rel="noopener noreferrer">
+                        Visit Original Problem
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="solution-sections">
+            <section class="problem-description">
+                <h2>Problem Description</h2>
+                <div class="description-content">
+                    {{ description_html|safe }}
+                </div>
+            </section>
+
+            <section class="solution-code">
+                <h2>Solution</h2>
+                <div class="code-wrapper">
+                    {{ solution_code_html|safe }}
+                </div>
+            </section>
+        </div>
+    </article>
+</div>
+{% endblock %}
